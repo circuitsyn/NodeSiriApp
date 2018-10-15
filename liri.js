@@ -1,34 +1,65 @@
 //code to read read and set any environment variables with the dotenv package
-const fs = require('fs');
-var dotenv = require("dotenv").config();
+require('fs');
+require("dotenv").config();
+var inquirer = require("inquirer");
 var Spotify = require('node-spotify-api');
+var keys = require('./keys.js');
+var spotify = new Spotify(keys.spotify);
+var operator = process.argv[2];
 
- 
-var spotify = new Spotify({
-  id: process.env.SPOTIFY_ID,
-  secret: process.env.SPOTIFY_SECRET
-});
- 
-// var spotify = new Spotify(keys.spotify);
+//Spotify Function Call
+function SpotifyAPICall() {
+    spotify
+    .search({ type: 'track', query: 'All the Small Things' })
+    .then(function(data) {
+        console.log(data.tracks.items[1]); 
+    })
+    .catch(function(err) {
+        console.error('Error occurred: ' + err); 
+    });
 
-
-spotify
-  .request('https://api.spotify.com/v1/tracks/7yCPwWs66K8Ba5lFuU2bcx')
-  .then(function(data) {
-    console.log(data); 
-  })
-  .catch(function(err) {
-    console.error('Error occurred: ' + err); 
-  });
+    };
 
 
-
-//code required 
-
-
-
-console.log('Welcome to Liri! How Can I help you today?\n');
+   
+//Intro Console Logs
+console.log('                             Welcome to Liri!\n');
+console.log("");
+console.log("                                  _____");
+console.log("                                 |     |");
+console.log("                                 | | | |");
+console.log("                                 |_____|");
+console.log("                           ____ ___|_|___ ____");
+console.log("                          ()___)         ()___)");
 console.log('\n');
-console.log('In order to get started please give me one of three commands: \n');
-console.log('spotify-this-song || movie-this || concert-this');
-console.log('To learn about what each one does put the word "help" after the choice you made.') 
+console.log("");
+console.log("In order to get started please give me one of three commands:");
+console.log("spotify-this-song || movie-this || concert-this");
+console.log(""); 
+
+
+
+//ask user question of what they would like to do
+inquirer.prompt([
+    // Here we create a basic text prompt.
+    {
+        type: "input",
+        message: "What command would you like to run?",
+        name: "command"
+    },
+])
+.then(function(inquirerResponse){
+console.log(inquirerResponse);
+var operator = inquirerResponse.command;
+console.log('operator: ', operator);
+
+switch(operator) {
+    case "spotify-this-song":
+        SpotifyAPICall();
+        break;
+    }
+
+});
+
+
+
