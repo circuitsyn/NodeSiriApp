@@ -27,11 +27,11 @@ function SpotifyAPICall() {
 
 //Movie-this Call
 
-function MovieThisAPICall() {
+function MovieThisAPICall(searchTerm) {
     
     apikey = 'trilogy';
-    searchTerm = 'remember+the+titans'
-    // We then run the request module on a URL with a JSON
+    
+    // API URL request call for OMDB
 request("http://www.omdbapi.com/?t=" + searchTerm +"&y=&plot=short&r=json" + "&apikey="+ apikey, function(error, response, body) {
 
     var jsonData = JSON.parse(body);
@@ -48,8 +48,7 @@ request("http://www.omdbapi.com/?t=" + searchTerm +"&y=&plot=short&r=json" + "&a
         console.log("Language: " + jsonData.Language);
         console.log("Plot: " + jsonData.Plot);
         console.log("Actors: " + jsonData.Actors);
-        
-      
+              
     }
   });
 }
@@ -78,14 +77,21 @@ console.log("");
 inquirer.prompt([
     // Here we create a basic text prompt.
     {
-        type: "input",
+        type: "list",
         message: "What command would you like to run?",
+        choices: ['spotify-this-song', 'movie-this', 'concert-this'],
         name: "command"
+    },
+    {
+        type: "input",
+        message: "What would you like to search for?",
+        name: "input"
     },
 ])
 .then(function(inquirerResponse){
     console.log(inquirerResponse);
     var operator = inquirerResponse.command;
+    var searchTerm = inquirerResponse.input;
     console.log('operator: ', operator);
 
     //Switch case to decide what to do based on the operator specifiec
@@ -95,7 +101,7 @@ inquirer.prompt([
             break;
 
         case "movie-this":
-            MovieThisAPICall();
+            MovieThisAPICall(searchTerm);
             break;
 
         case "concert-this":
