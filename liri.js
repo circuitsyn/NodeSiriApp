@@ -136,15 +136,17 @@ function RandomRead() {
 function decideFunc(operator, searchTerm) {
     switch(operator) {
         case "spotify-this-song":
-            // followUpQ(searchTerm); sample insertion
+            followUpQ();
             SpotifyAPICall(searchTerm);
             break;
 
         case "movie-this":
+            followUpQ();
             MovieThisAPICall(searchTerm);
             break;
 
         case "concert-this":
+            followUpQ();
             ConcertThisAPICall(searchTerm);
             break;
 
@@ -186,20 +188,21 @@ inquirer.prompt([
 
 });
 };
+
 //sample follow up question code
-// function followUpQ(searchTerm){
-//     inquirer.prompt([
-//         {
-//             type: "input",
-//             message: "What would you like to search for?",
-//             name: "input2"
-//         },
-//     ])
-//     .then(function(inquirerResponse){
-//     searchTerm = inquirerResponse.input2;
-// });
-//     return searchTerm;
-// };
+function followUpQ(searchTerm){
+    inquirer.prompt([
+        {
+            type: "input",
+            message: "What would you like to search for?",
+            name: "input2"
+        },
+    ])
+    .then(function(inquirerResponse){
+    searchTerm = inquirerResponse.input2;
+});
+    return searchTerm;
+};
 
 
    
