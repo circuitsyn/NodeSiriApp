@@ -1,5 +1,5 @@
 //code to read read and set any environment variables with the dotenv package
-require('fs');
+var fs = require('fs');
 require("dotenv").config();
 var inquirer = require("inquirer");
 var moment = require("moment");
@@ -105,15 +105,48 @@ request("https://rest.bandsintown.com/artists/" + searchTerm + "/events?app_id="
             console.log('Location: ' + events[i].venue.city + ', ' + events[i].venue.country);
             console.log('Date of Event: ', events[i].datetime);
             console.log('');
-        console.log("⊱ ────── {⋅. ♪ .⋅} ────── ⊰");
-        
-              
+            console.log("⊱ ────── {⋅. ♪ .⋅} ────── ⊰");
+                      
     };
   };
 });
 };
 
+//DO-WHAT-IT-SAYS
+function RandomRead() {
+    fs.readFile("random.txt", "utf8", function(error, data) {
 
+        // If the code experiences any errors it will log the error to the console.
+        if (error) {
+          return console.log(error);
+        }
+      
+        // We will then print the contents of data
+        console.log(data);
+      
+        // Then split it by commas (to make it more readable)
+        var dataArr = data.split(",");
+      
+        // We will then re-display the content as an array for later use.
+        console.log(dataArr);
+      
+      });
+};
+
+//sample follow up question code
+// function followUpQ(searchTerm){
+//     inquirer.prompt([
+//         {
+//             type: "input",
+//             message: "What would you like to search for?",
+//             name: "input2"
+//         },
+//     ])
+//     .then(function(inquirerResponse){
+//     searchTerm = inquirerResponse.input2;
+// });
+//     return searchTerm;
+// };
 
 
    
@@ -130,7 +163,7 @@ console.log('\n');
 console.log("In order to get started please give me one of three commands.");
 console.log("Plus the term you'd like to search!")
 console.log('');
-console.log("spotify-this-song || movie-this || concert-this");
+console.log("spotify-this-song || movie-this || concert-this || do-what-it-says");
 console.log(""); 
 
 
@@ -141,7 +174,7 @@ inquirer.prompt([
     {
         type: "list",
         message: "What command would you like to run?",
-        choices: ['spotify-this-song', 'movie-this', 'concert-this'],
+        choices: ['spotify-this-song', 'movie-this', 'concert-this', 'do-what-it-says'],
         name: "command"
     },
     //here we ask what search item they would like to combine with the operating command
@@ -160,6 +193,7 @@ inquirer.prompt([
     //Switch case to decide what to do based on the operator specifiec
     switch(operator) {
         case "spotify-this-song":
+            // followUpQ(searchTerm); sample insertion
             SpotifyAPICall(searchTerm);
             break;
 
@@ -169,6 +203,10 @@ inquirer.prompt([
 
         case "concert-this":
             ConcertThisAPICall(searchTerm);
+            break;
+
+        case "do-what-it-says":
+            RandomRead();
             break;
         
         default:
