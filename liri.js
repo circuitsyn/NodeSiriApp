@@ -11,12 +11,29 @@ var spotify = new Spotify(keys.spotify);
 // var omdb = new Movie(keys.omdb);
 var omdb = process.env.OMDB_API;
 
+
+var getArtistNames = function(artist) {
+    return JSON.stringify(artist.name);
+}
+
+
 //Spotify Function Call
-function SpotifyAPICall() {
+function SpotifyAPICall(searchTerm) {
     spotify
-    .search({ type: 'track', query: 'All the Small Things' })
+    .search({ type: 'track', query: searchTerm })
     .then(function(data) {
-        console.log(data.tracks.items[1]); 
+        
+        console.log('⊱ ────── {.⋅ ♫ ⋅.} ───── ⊰');
+        var songs = data.tracks.items;
+        for (var i=0; i<songs.length; i++){
+            
+            console.log(i+1);
+            console.log('Artist(s): ', songs[i].artists.map(getArtistNames).join(", "));
+            console.log('Song name: ', songs[i].name);
+            console.log('Preview song: ', songs[i].preview_url);
+            console.log('Album: ', songs[i].album.name);
+            console.log('⊱ ────── {.⋅ ♫ ⋅.} ───── ⊰');
+        }
     })
     .catch(function(err) {
         console.error('Error occurred: ' + err); 
@@ -97,7 +114,7 @@ inquirer.prompt([
     //Switch case to decide what to do based on the operator specifiec
     switch(operator) {
         case "spotify-this-song":
-            SpotifyAPICall();
+            SpotifyAPICall(searchTerm);
             break;
 
         case "movie-this":
