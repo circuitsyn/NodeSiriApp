@@ -126,13 +126,66 @@ function RandomRead() {
       
         // Then split it by commas (to make it more readable)
         var dataArr = data.split(",");
-      
+
         // We will then re-display the content as an array for later use.
         console.log(dataArr);
       
       });
 };
 
+function decideFunc(operator, searchTerm) {
+    switch(operator) {
+        case "spotify-this-song":
+            // followUpQ(searchTerm); sample insertion
+            SpotifyAPICall(searchTerm);
+            break;
+
+        case "movie-this":
+            MovieThisAPICall(searchTerm);
+            break;
+
+        case "concert-this":
+            ConcertThisAPICall(searchTerm);
+            break;
+
+        case "do-what-it-says":
+            RandomRead();
+            break;
+        
+        default:
+            console.log('Check to see your operation command was spelled correctly!');
+            break;
+    };      
+};
+
+function initialQs() {
+//ask user question of what they would like to do
+inquirer.prompt([
+    // Here we create a list of choices
+    {
+        type: "list",
+        message: "What command would you like to run?",
+        choices: ['spotify-this-song', 'movie-this', 'concert-this', 'do-what-it-says'],
+        name: "command"
+    },
+    //here we ask what search item they would like to combine with the operating command
+    {
+        type: "input",
+        message: "What would you like to search for?",
+        name: "input"
+    },
+])
+.then(function(inquirerResponse){
+    console.log(inquirerResponse);
+    var operator = inquirerResponse.command;
+    var searchTerm = inquirerResponse.input;
+    
+
+    //Switch case to decide what to do based on the operator specifiec
+    decideFunc(operator, searchTerm);
+
+});
+};
 //sample follow up question code
 // function followUpQ(searchTerm){
 //     inquirer.prompt([
@@ -168,53 +221,7 @@ console.log("");
 
 
 
-//ask user question of what they would like to do
-inquirer.prompt([
-    // Here we create a list of choices
-    {
-        type: "list",
-        message: "What command would you like to run?",
-        choices: ['spotify-this-song', 'movie-this', 'concert-this', 'do-what-it-says'],
-        name: "command"
-    },
-    //here we ask what search item they would like to combine with the operating command
-    {
-        type: "input",
-        message: "What would you like to search for?",
-        name: "input"
-    },
-])
-.then(function(inquirerResponse){
-    console.log(inquirerResponse);
-    var operator = inquirerResponse.command;
-    var searchTerm = inquirerResponse.input;
-    
-
-    //Switch case to decide what to do based on the operator specifiec
-    switch(operator) {
-        case "spotify-this-song":
-            // followUpQ(searchTerm); sample insertion
-            SpotifyAPICall(searchTerm);
-            break;
-
-        case "movie-this":
-            MovieThisAPICall(searchTerm);
-            break;
-
-        case "concert-this":
-            ConcertThisAPICall(searchTerm);
-            break;
-
-        case "do-what-it-says":
-            RandomRead();
-            break;
-        
-        default:
-            console.log('Check to see your operation command was spelled correctly!');
-            break;
-    };      
-
-});
+initialQs();
 
 
 
