@@ -2,6 +2,8 @@
 require('fs');
 require("dotenv").config();
 var inquirer = require("inquirer");
+var moment = require("moment");
+// var bandsintown = require('bandsintown')('9d6aabfeb9d1cdc49934d129dae9bfef');
 var Movie = require('omdb');
 var request = require('request');
 var Spotify = require('node-spotify-api');
@@ -12,17 +14,20 @@ var spotify = new Spotify(keys.spotify);
 var omdb = process.env.OMDB_API;
 
 
+//Functions
+//Spotify Artist Name Retrieval
 var getArtistNames = function(artist) {
     return JSON.stringify(artist.name);
 }
 
 
-//Spotify Function Call
+//SPOTIFY Function Call
 function SpotifyAPICall(searchTerm) {
     spotify
     .search({ type: 'track', query: searchTerm })
     .then(function(data) {
-        
+        //Starting border for music
+        console.log('\n');
         console.log('⊱ ────── {.⋅ ♫ ⋅.} ───── ⊰');
         var songs = data.tracks.items;
         for (var i=0; i<songs.length; i++){
@@ -42,13 +47,12 @@ function SpotifyAPICall(searchTerm) {
     };
 
 
-//Movie-this Call
-
+//OBMD Call
 function MovieThisAPICall(searchTerm) {
     
     apikey = 'trilogy';
     
-    // API URL request call for OMDB
+// API URL request call for OMDB
 request("http://www.omdbapi.com/?t=" + searchTerm +"&y=&plot=short&r=json" + "&apikey="+ apikey, function(error, response, body) {
 
     var jsonData = JSON.parse(body);
@@ -57,6 +61,9 @@ request("http://www.omdbapi.com/?t=" + searchTerm +"&y=&plot=short&r=json" + "&a
 
     // If there were no errors and the response code was 200 (i.e. the request was successful)...
     if (!error && response.statusCode === 200) {
+
+        console.log('\n');
+        console.log("»»————-　★　————-««");
         console.log("Title: ", jsonData.Title);
         console.log("Year Released: " + jsonData.Year);
         console.log("IMDB Rating: " + jsonData.imdbRating);
@@ -65,14 +72,52 @@ request("http://www.omdbapi.com/?t=" + searchTerm +"&y=&plot=short&r=json" + "&a
         console.log("Language: " + jsonData.Language);
         console.log("Plot: " + jsonData.Plot);
         console.log("Actors: " + jsonData.Actors);
+        console.log("»»————-　★　————-««");
               
-    }
+    };
   });
-}
+};
+
+//BANDS-IN-TOWN call function
+function ConcertThisAPICall(searchTerm) {
+
+    apikey = '9d6aabfeb9d1cdc49934d129dae9bfef';
+    
+// API URL request call for OMDB
+request("https://rest.bandsintown.com/artists/" + searchTerm + "/events?app_id=" + apikey + "&date=upcoming", function(error, response, body) {
+
+    var events = JSON.parse(body);
+
+    
+    
+    // If there were no errors and the response code was 200 (i.e. the request was successful)...
+    if (!error && response.statusCode === 200) {
+
+        console.log('\n');
+        console.log('Events for: ', searchTerm);
+        console.log("⊱ ────── {⋅. ♪ .⋅} ────── ⊰");
+        // console.log("Bands in town data: ", events);
+        
+        for (var i=0; i< events.length; i++){
+            
+            console.log(i+1);
+            console.log('Name of Venue: ', events[i].venue.name);
+            console.log('Location: ' + events[i].venue.city + ', ' + events[i].venue.country);
+            console.log('Date of Event: ', events[i].datetime);
+            console.log('');
+        console.log("⊱ ────── {⋅. ♪ .⋅} ────── ⊰");
+        
+              
+    };
+  };
+});
+};
+
+
 
 
    
-//Intro Console Logs
+//Intro console Logs
 console.log('                             Welcome to Liri!\n');
 console.log("");
 console.log("                                  _____");
@@ -92,13 +137,14 @@ console.log("");
 
 //ask user question of what they would like to do
 inquirer.prompt([
-    // Here we create a basic text prompt.
+    // Here we create a list of choices
     {
         type: "list",
         message: "What command would you like to run?",
         choices: ['spotify-this-song', 'movie-this', 'concert-this'],
         name: "command"
     },
+    //here we ask what search item they would like to combine with the operating command
     {
         type: "input",
         message: "What would you like to search for?",
@@ -109,7 +155,7 @@ inquirer.prompt([
     console.log(inquirerResponse);
     var operator = inquirerResponse.command;
     var searchTerm = inquirerResponse.input;
-    console.log('operator: ', operator);
+    
 
     //Switch case to decide what to do based on the operator specifiec
     switch(operator) {
@@ -122,13 +168,13 @@ inquirer.prompt([
             break;
 
         case "concert-this":
-            ConcertThisAPICall();
+            ConcertThisAPICall(searchTerm);
             break;
         
         default:
             console.log('Check to see your operation command was spelled correctly!');
             break;
-    }       
+    };      
 
 });
 
