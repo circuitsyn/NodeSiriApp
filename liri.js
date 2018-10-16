@@ -126,10 +126,13 @@ function RandomRead() {
       
         // Then split it by commas (to make it more readable)
         var dataArr = data.split(",");
-
+        operator = dataArr[0];
+        searchTerm = dataArr[1];
         // We will then re-display the content as an array for later use.
         console.log(dataArr);
-      
+        decideFunc(operator, searchTerm);
+        // return ();
+        
       });
 };
 
