@@ -9,6 +9,7 @@ var request = require('request');
 var Spotify = require('node-spotify-api');
 var keys = require('./keys.js');
 var spotify = new Spotify(keys.spotify);
+var checkState = false;
 
 // var omdb = new Movie(keys.omdb);
 var omdb = process.env.OMDB_API;
@@ -22,7 +23,21 @@ var getArtistNames = function(artist) {
 
 
 //SPOTIFY Function Call
-function SpotifyAPICall(searchTerm) {
+function SpotifyAPICall(checkState) {
+    console.log('chckstate ins potify function: ', checkState);
+    if (checkState == false) {
+    //follow up question to ask for search term
+    inquirer.prompt([
+        {
+            type: "input",
+            message: "What audio track would you like to search for?",
+            name: "input"
+        },
+    ])
+    .then(function(inquirerResponse){
+    searchTerm = inquirerResponse.input;
+    
+    //spotify api call
     spotify
     .search({ type: 'track', query: searchTerm })
     .then(function(data) {
@@ -43,17 +58,57 @@ function SpotifyAPICall(searchTerm) {
     .catch(function(err) {
         console.error('Error occurred: ' + err); 
     });
+    });
+    
+    }
+
+    else if (checkState == true) {
+        //spotify api call
+    spotify
+    .search({ type: 'track', query: searchTerm })
+    .then(function(data) {
+        checkState = false;
+        //Starting border for music
+        console.log('\n');
+        console.log('⊱ ────── {.⋅ ♫ ⋅.} ───── ⊰');
+        var songs = data.tracks.items;
+        for (var i=0; i<songs.length; i++){
+            
+            console.log(i+1);
+            console.log('Artist(s): ', songs[i].artists.map(getArtistNames).join(", "));
+            console.log('Song name: ', songs[i].name);
+            console.log('Preview song: ', songs[i].preview_url);
+            console.log('Album: ', songs[i].album.name);
+            console.log('⊱ ────── {.⋅ ♫ ⋅.} ───── ⊰');
+        }
+    })
+    .catch(function(err) {
+        console.error('Error occurred: ' + err); 
+    });
 
     };
+};
 
 
 //OBMD Call
 function MovieThisAPICall(searchTerm) {
     
+    //follow up question for search term
+    inquirer.prompt([
+        {
+            type: "input",
+            message: "What audio track would you like to search for?",
+            name: "input"
+        },
+    ])
+    .then(function(inquirerResponse){
+    searchTerm = inquirerResponse.input;
+
+
     apikey = 'trilogy';
     
-// API URL request call for OMDB
-request("http://www.omdbapi.com/?t=" + searchTerm +"&y=&plot=short&r=json" + "&apikey="+ apikey, function(error, response, body) {
+    // API URL request call for OMDB
+    request("http://www.omdbapi.com/?t=" + searchTerm +"&y=&plot=short&r=json" + "&apikey="+ apikey, function(error, response, body) {
 
     var jsonData = JSON.parse(body);
 
@@ -76,15 +131,30 @@ request("http://www.omdbapi.com/?t=" + searchTerm +"&y=&plot=short&r=json" + "&a
               
     };
   });
+});
 };
+
 
 //BANDS-IN-TOWN call function
 function ConcertThisAPICall(searchTerm) {
+    
+    //follow up Question for search term
+    inquirer.prompt([
+        {
+            type: "input",
+            message: "What audio track would you like to search for?",
+            name: "input"
+        },
+    ])
+    .then(function(inquirerResponse){
+    searchTerm = inquirerResponse.input;
+    
 
+    //OMDB API Call
     apikey = '9d6aabfeb9d1cdc49934d129dae9bfef';
     
-// API URL request call for OMDB
-request("https://rest.bandsintown.com/artists/" + searchTerm + "/events?app_id=" + apikey + "&date=upcoming", function(error, response, body) {
+    // API URL request call for OMDB
+    request("https://rest.bandsintown.com/artists/" + searchTerm + "/events?app_id=" + apikey + "&date=upcoming", function(error, response, body) {
 
     var events = JSON.parse(body);
 
@@ -110,7 +180,12 @@ request("https://rest.bandsintown.com/artists/" + searchTerm + "/events?app_id="
     };
   };
 });
+});
 };
+
+ 
+
+
 
 //DO-WHAT-IT-SAYS
 function RandomRead() {
@@ -130,31 +205,36 @@ function RandomRead() {
         searchTerm = dataArr[1];
         // We will then re-display the content as an array for later use.
         console.log(dataArr);
-        decideFunc(operator, searchTerm);
+        decideFunc(operator, searchTerm, checkState);
         // return ();
         
       });
 };
 
-function decideFunc(operator, searchTerm) {
+
+//Function to help decide what to do with the operator input
+function decideFunc(operator) {
     switch(operator) {
         case "spotify-this-song":
-            followUpQ();
-            SpotifyAPICall(searchTerm);
+            
+            console.log('checkstate in switch: ', checkState);
+            SpotifyAPICall(checkState);
             break;
 
         case "movie-this":
-            followUpQ();
+            checkState = false;
             MovieThisAPICall(searchTerm);
             break;
 
         case "concert-this":
-            followUpQ();
+            checkState = false;
             ConcertThisAPICall(searchTerm);
             break;
 
         case "do-what-it-says":
-            RandomRead();
+            checkState = true;
+            console.log('checkstate in switch doWhatItSays: ', checkState);
+            RandomRead(checkState);
             break;
         
         default:
@@ -163,7 +243,9 @@ function decideFunc(operator, searchTerm) {
     };      
 };
 
-function initialQs() {
+
+//Function to kick off the questions ater initial greeting
+function initialQ() {
 //ask user question of what they would like to do
 inquirer.prompt([
     // Here we create a list of choices
@@ -173,21 +255,16 @@ inquirer.prompt([
         choices: ['spotify-this-song', 'movie-this', 'concert-this', 'do-what-it-says'],
         name: "command"
     },
-    //here we ask what search item they would like to combine with the operating command
-    {
-        type: "input",
-        message: "What would you like to search for?",
-        name: "input"
-    },
+    
 ])
 .then(function(inquirerResponse){
     console.log(inquirerResponse);
     var operator = inquirerResponse.command;
-    var searchTerm = inquirerResponse.input;
+    // var searchTerm = inquirerResponse.input;
     
 
     //Switch case to decide what to do based on the operator specifiec
-    decideFunc(operator, searchTerm);
+    decideFunc(operator);
 
 });
 };
@@ -209,7 +286,7 @@ function followUpQ(searchTerm){
 
 
    
-//Intro console Logs
+//Intro console Logs--------------------------------
 console.log('                             Welcome to Liri!\n');
 console.log("");
 console.log("                                  _____");
@@ -224,10 +301,10 @@ console.log("Plus the term you'd like to search!")
 console.log('');
 console.log("spotify-this-song || movie-this || concert-this || do-what-it-says");
 console.log(""); 
+//--------------------------------------------
 
-
-
-initialQs();
+//Program Start
+initialQ();
 
 
 
