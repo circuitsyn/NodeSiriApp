@@ -44,7 +44,7 @@ When running concert-this along with a band or performer of choice you will rece
 
 Default (run blank): Shinedown
 
-[![Concert This Video](http://img.youtube.com/vi/YOUTUBE_bn7m2P4zm1o/0.jpg)](http://www.youtube.com/watch?v=bn7m2P4zm1o)
+[![Concert This Video](http://img.youtube.com/vi/bn7m2P4zm1o/0.jpg)](http://www.youtube.com/watch?v=bn7m2P4zm1o)
 
 ## Do-What-It-Says
 
