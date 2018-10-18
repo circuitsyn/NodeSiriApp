@@ -27,7 +27,7 @@ function  writeData(data) {
         }
       
         // Otherwise, it will print: "movies.txt was updated!"
-        console.log("log.txt was updated!");
+        // console.log("log.txt was updated!");
       
       });
 
@@ -42,7 +42,7 @@ var getArtistNames = function(artist) {
 
 //SPOTIFY Function Call
 function SpotifyAPICall(checkState) {
-    console.log('chckstate ins potify function: ', checkState);
+    
     if (checkState == false) {
     //follow up question to ask for search term
     inquirer.prompt([
@@ -66,20 +66,35 @@ function SpotifyAPICall(checkState) {
     .then(function(data) {
         //Starting border for music
         console.log('\n');
+        writeData('\n');
         console.log('⊱ ────── {.⋅ ♫ ⋅.} ───── ⊰');
+        writeData('⊱ ────── {.⋅ ♫ ⋅.} ───── ⊰');
+
         var songs = data.tracks.items;
         for (var i=0; i<songs.length; i++){
             
-            console.log(i+1);
-            data = i+1;
-            writeData(data+'\r');
-            console.log('Artist(s): ', songs[i].artists.map(getArtistNames).join(", "));
-            data = ('Artist(s): ', songs[i].artists.map(getArtistNames).join(", "));
-            writeData(data+'\r');
-            console.log('Song name: ', songs[i].name);
-            console.log('Preview song: ', songs[i].preview_url);
-            console.log('Album: ', songs[i].album.name);
+            count = i+1;
+            console.log(count);
+            writeData(count +'\r');
+
+            artist = ('Artist(s): ', songs[i].artists.map(getArtistNames).join(", "));
+            console.log(artist);
+            writeData(artist +'\r');
+            
+            song = ('Song name: ', songs[i].name);
+            console.log(song);
+            writeData(song +'\r');
+
+            previewURL = ('Preview song: ', songs[i].preview_url);
+            console.log(previewURL);
+            writeData(previewURL + '\r');
+
+            album = ('Album: ', songs[i].album.name);
+            console.log(album);
+            writeData(album + '\r')
+
             console.log('⊱ ────── {.⋅ ♫ ⋅.} ───── ⊰');
+            writeData('⊱ ────── {.⋅ ♫ ⋅.} ───── ⊰');
         }
     })
     .catch(function(err) {
@@ -96,17 +111,37 @@ function SpotifyAPICall(checkState) {
     .then(function(data) {
         checkState = false;
         //Starting border for music
+
         console.log('\n');
+        writeData('\n');
         console.log('⊱ ────── {.⋅ ♫ ⋅.} ───── ⊰');
+        writeData('⊱ ────── {.⋅ ♫ ⋅.} ───── ⊰\r\n');
+
         var songs = data.tracks.items;
         for (var i=0; i<songs.length; i++){
             
-            console.log(i+1);
-            console.log('Artist(s): ', songs[i].artists.map(getArtistNames).join(", "));
-            console.log('Song name: ', songs[i].name);
-            console.log('Preview song: ', songs[i].preview_url);
-            console.log('Album: ', songs[i].album.name);
+            count = i+1;
+            console.log(count);
+            writeData(count +'\r\n');
+
+            artist = ('Artist(s): ', songs[i].artists.map(getArtistNames).join(", "));
+            console.log(artist);
+            writeData(artist +'\r\n');
+            
+            song = ('Song name: ', songs[i].name);
+            console.log(song);
+            writeData(song +'\r\n');
+
+            previewURL = ('Preview song: ', songs[i].preview_url);
+            console.log(previewURL);
+            writeData(previewURL + '\r\n');
+
+            album = ('Album: ', songs[i].album.name);
+            console.log(album);
+            writeData(album + '\r\n')
+
             console.log('⊱ ────── {.⋅ ♫ ⋅.} ───── ⊰');
+            writeData('⊱ ────── {.⋅ ♫ ⋅.} ───── ⊰\r\n');
         }
     })
     .catch(function(err) {
@@ -119,8 +154,7 @@ function SpotifyAPICall(checkState) {
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ OBMD Call ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 function MovieThisAPICall(checkState) {
-    console.log('checkstate in movie call api: ', checkState);
-    
+   
     if (checkState == false) {
     //follow up question for search term
     inquirer.prompt([
@@ -322,7 +356,6 @@ function RandomRead() {
 function decideFunc(operator) {
     switch(operator) {
         case "spotify-this-song":
-            console.log('checkstate in switch: ', checkState);
             SpotifyAPICall(checkState);
             break;
 
@@ -336,7 +369,6 @@ function decideFunc(operator) {
 
         case "do-what-it-says":
             checkState = true;
-            console.log('checkstate in switch doWhatItSays: ', checkState);
             RandomRead(checkState);
             break;
         
@@ -362,7 +394,7 @@ inquirer.prompt([
     
 ])
 .then(function(inquirerResponse){
-    console.log(inquirerResponse);
+    
     var operator = inquirerResponse.command;
     // var searchTerm = inquirerResponse.input;
     
