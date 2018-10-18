@@ -62,7 +62,7 @@ Running do-what-it-says will take in a file names random.txt and runn the comman
 
 
 
-## File Write to create a log file
+## File Write to Create a Log File
 
 In order to create a log file we are using the fs npm package to writeData(); to a text file called log.txt. All data that is run and displayed in the terminal is also reflected in the file. It also does this without overwriting the file. As you can see in the uploaded log file it took some formatting attempts to get the data to read properly.
 
