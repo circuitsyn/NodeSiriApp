@@ -59,3 +59,11 @@ When running concert-this along with a band or performer of choice you will rece
 Running do-what-it-says will take in a file names random.txt and runn the command kept inside. for this demo the contents of the random.txt file are: spotify-this-song,"I Want it That Way"
 
 [![Do What It Says Video](http://img.youtube.com/vi/pSDE4_URXXs/0.jpg)](http://www.youtube.com/watch?v=pSDE4_URXXs)
+
+
+
+## File Write to create a log file
+
+In order to create a log file we are using the fs npm package to writeData(); to a text file called log.txt. All data that is run and displayed in the terminal is also reflected in the file. It also does this without overwriting the file. As you can see in the uploaded log file it took some formatting attempts to get the data to read properly.
+
+[![Do What It Says Video](http://img.youtube.com/vi/4NqoqDAivEo/0.jpg)](http://www.youtube.com/watch?v=4NqoqDAivEo)
