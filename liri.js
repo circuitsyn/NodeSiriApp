@@ -169,8 +169,9 @@ else if (checkState == true){
 
 
 //BANDS-IN-TOWN call function
-function ConcertThisAPICall(searchTerm) {
+function ConcertThisAPICall(checkState) {
     
+    if (checkState == false) {
     //follow up Question for search term
     inquirer.prompt([
         {
@@ -205,8 +206,8 @@ function ConcertThisAPICall(searchTerm) {
             
             console.log(i+1);
             console.log('Name of Venue: ', events[i].venue.name);
-            console.log('Location: ' + events[i].venue.city + ', ' + events[i].venue.country);
-            console.log('Date of Event: ', events[i].datetime);
+            console.log('Location: ' + events[i].venue.city + ', ' + events[i].venue.country);console.log('Date of Event: ', moment(events[i].datetime).format("MM-DD-YYYY"));
+            console.log('Time: ', moment(events[i].datetime).format("hh:mm a"))
             console.log('');
             console.log("⊱ ────── {⋅. ♪ .⋅} ────── ⊰");
                       
@@ -214,6 +215,40 @@ function ConcertThisAPICall(searchTerm) {
   };
 });
 });
+}
+    else if (checkState = true) {
+
+        //OMDB API Call
+        apikey = '9d6aabfeb9d1cdc49934d129dae9bfef';
+        checkState = false;
+        // API URL request call for OMDB
+        request("https://rest.bandsintown.com/artists/" + searchTerm + "/events?app_id=" + apikey + "&date=upcoming", function(error, response, body) {
+
+        var events = JSON.parse(body);
+        
+        
+        
+        // If there were no errors and the response code was 200 (i.e. the request was successful)...
+        if (!error && response.statusCode === 200) {
+            
+            console.log('\n');
+            console.log('Events for: ', searchTerm);
+            console.log("⊱ ────── {⋅. ♪ .⋅} ────── ⊰");
+            // console.log("Bands in town data: ", events);
+            
+            for (var i=0; i< events.length; i++){
+                
+                console.log(i+1);
+                console.log('Name of Venue: ', events[i].venue.name);
+                console.log('Location: ' + events[i].venue.city + ', ' + events[i].venue.country);
+                console.log('Date of Event: ', events[i].datetime);
+                console.log('');
+                console.log("⊱ ────── {⋅. ♪ .⋅} ────── ⊰");
+                        
+    };
+  };
+});
+};
 };
 
  
@@ -249,18 +284,15 @@ function RandomRead() {
 function decideFunc(operator) {
     switch(operator) {
         case "spotify-this-song":
-            
             console.log('checkstate in switch: ', checkState);
             SpotifyAPICall(checkState);
             break;
 
         case "movie-this":
-           
             MovieThisAPICall(checkState);
             break;
 
         case "concert-this":
-            checkState = false;
             ConcertThisAPICall(checkState);
             break;
 
