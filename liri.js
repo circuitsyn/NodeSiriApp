@@ -70,8 +70,14 @@ function SpotifyAPICall(checkState) {
         console.log('⊱ ────── {.⋅ ♫ ⋅.} ───── ⊰');
         writeData('⊱ ────── {.⋅ ♫ ⋅.} ───── ⊰\r\n');
 
+        time =(('Time logged: ') + (moment().format("MM-DD-YYYY hh:mma")));
+        console.log(time);
+        writeData(time +'\r\n');
+
         var songs = data.tracks.items;
+
         for (var i=0; i<songs.length; i++){
+            
             
             count = i+1;
             console.log(count);
@@ -116,6 +122,10 @@ function SpotifyAPICall(checkState) {
         writeData('\n');
         console.log('⊱ ────── {.⋅ ♫ ⋅.} ───── ⊰');
         writeData('⊱ ────── {.⋅ ♫ ⋅.} ───── ⊰\r\n');
+
+        time =(('Time logged: ') + (moment().format("MM-DD-YYYY hh:mma")));
+        console.log(time);
+        writeData(time +'\r\n');
 
         var songs = data.tracks.items;
         for (var i=0; i<songs.length; i++){
