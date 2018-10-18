@@ -91,13 +91,15 @@ function SpotifyAPICall(checkState) {
 
 
 //OBMD Call
-function MovieThisAPICall(searchTerm) {
+function MovieThisAPICall(checkState) {
+    console.log('checkstate in movie call api: ', checkState);
     
+    if (checkState == false) {
     //follow up question for search term
     inquirer.prompt([
         {
             type: "input",
-            message: "What audio track would you like to search for?",
+            message: "What movie would you like to search for?",
             name: "input"
         },
     ])
@@ -132,6 +134,37 @@ function MovieThisAPICall(searchTerm) {
     };
   });
 });
+}
+
+else if (checkState == true){
+
+    apikey = 'trilogy';
+    checkState = false;
+    // API URL request call for OMDB
+    request("http://www.omdbapi.com/?t=" + searchTerm +"&y=&plot=short&r=json" + "&apikey="+ apikey, function(error, response, body) {
+
+    var jsonData = JSON.parse(body);
+
+    
+
+    // If there were no errors and the response code was 200 (i.e. the request was successful)...
+    if (!error && response.statusCode === 200) {
+
+        console.log('\n');
+        console.log("»»————-　★　————-««");
+        console.log("Title: ", jsonData.Title);
+        console.log("Year Released: " + jsonData.Year);
+        console.log("IMDB Rating: " + jsonData.imdbRating);
+        console.log("Rotten Tomatoes Rating: " + jsonData.Ratings[1].Value);
+        console.log("Country Made: " + jsonData.Country);
+        console.log("Language: " + jsonData.Language);
+        console.log("Plot: " + jsonData.Plot);
+        console.log("Actors: " + jsonData.Actors);
+        console.log("»»————-　★　————-««");
+    };
+});
+
+};
 };
 
 
@@ -222,13 +255,13 @@ function decideFunc(operator) {
             break;
 
         case "movie-this":
-            checkState = false;
-            MovieThisAPICall(searchTerm);
+           
+            MovieThisAPICall(checkState);
             break;
 
         case "concert-this":
             checkState = false;
-            ConcertThisAPICall(searchTerm);
+            ConcertThisAPICall(checkState);
             break;
 
         case "do-what-it-says":
@@ -269,23 +302,6 @@ inquirer.prompt([
 });
 };
 
-//sample follow up question code
-function followUpQ(searchTerm){
-    inquirer.prompt([
-        {
-            type: "input",
-            message: "What would you like to search for?",
-            name: "input2"
-        },
-    ])
-    .then(function(inquirerResponse){
-    searchTerm = inquirerResponse.input2;
-});
-    return searchTerm;
-};
-
-
-   
 //Intro console Logs--------------------------------
 console.log('                             Welcome to Liri!\n');
 console.log("");
