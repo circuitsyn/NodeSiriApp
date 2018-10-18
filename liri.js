@@ -68,33 +68,33 @@ function SpotifyAPICall(checkState) {
         console.log('\n');
         writeData('\n');
         console.log('⊱ ────── {.⋅ ♫ ⋅.} ───── ⊰');
-        writeData('⊱ ────── {.⋅ ♫ ⋅.} ───── ⊰');
+        writeData('⊱ ────── {.⋅ ♫ ⋅.} ───── ⊰\r\n');
 
         var songs = data.tracks.items;
         for (var i=0; i<songs.length; i++){
             
             count = i+1;
             console.log(count);
-            writeData(count +'\r');
+            writeData(count +'\r\n');
 
             artist = ('Artist(s): ', songs[i].artists.map(getArtistNames).join(", "));
             console.log(artist);
-            writeData(artist +'\r');
+            writeData(artist +'\r\n');
             
             song = ('Song name: ', songs[i].name);
             console.log(song);
-            writeData(song +'\r');
+            writeData(song +'\r\n');
 
             previewURL = ('Preview song: ', songs[i].preview_url);
             console.log(previewURL);
-            writeData(previewURL + '\r');
+            writeData(previewURL + '\r\n');
 
             album = ('Album: ', songs[i].album.name);
             console.log(album);
-            writeData(album + '\r')
+            writeData(album + '\r\n')
 
             console.log('⊱ ────── {.⋅ ♫ ⋅.} ───── ⊰');
-            writeData('⊱ ────── {.⋅ ♫ ⋅.} ───── ⊰');
+            writeData('⊱ ────── {.⋅ ♫ ⋅.} ───── ⊰\r\n');
         }
     })
     .catch(function(err) {
@@ -184,18 +184,53 @@ function MovieThisAPICall(checkState) {
     // If there were no errors and the response code was 200 (i.e. the request was successful)...
     if (!error && response.statusCode === 200) {
 
-        console.log('\n');
-        console.log("»»————-　★　————-««");
-        console.log("Title: ", jsonData.Title);
-        console.log("Year Released: " + jsonData.Year);
-        console.log("IMDB Rating: " + jsonData.imdbRating);
-        console.log("Rotten Tomatoes Rating: " + jsonData.Ratings[1].Value);
-        console.log("Country Made: " + jsonData.Country);
-        console.log("Language: " + jsonData.Language);
-        console.log("Plot: " + jsonData.Plot);
-        console.log("Actors: " + jsonData.Actors);
-        console.log("»»————-　★　————-««");
-              
+        indent = ('\n');
+        console.log(indent);
+        writeData(indent +'\r\n');
+        
+        bar = ("»»————-　★　————-««");
+        console.log(bar);
+        writeData(bar +'\r\n');
+
+        time =(('Time logged: ') + (moment().format("MM-DD-YYYY hh:mma")));
+        console.log(time);
+        writeData(time +'\r\n');
+
+        title = ("Title: ", jsonData.Title);
+        console.log(title);
+        writeData(title +'\r\n');
+
+        yrReleased = ("Year Released: " + jsonData.Year);
+        console.log(yrReleased);
+        writeData(yrReleased +'\r\n');
+
+        IMDBRating = ("IMDB Rating: " + jsonData.imdbRating);
+        console.log(IMDBRating);
+        writeData(IMDBRating +'\r\n');
+
+        RT = ("Rotten Tomatoes Rating: " + jsonData.Ratings[1].Value);
+        console.log(RT);
+        writeData(RT +'\r\n');
+
+        country = ("Country Made: " + jsonData.Country);
+        console.log(country);
+        writeData(country +'\r\n');
+
+        lang = ("Language: " + jsonData.Language);
+        console.log(lang);
+        writeData(lang +'\r\n');
+
+        plot = ("Plot: " + jsonData.Plot);
+        console.log(plot);
+        writeData(plot +'\r\n');
+
+        actors = ("Actors: " + jsonData.Actors);
+        console.log(actors);
+        writeData(actors +'\r\n');
+
+        console.log(bar);
+        writeData(bar +'\r\n');
+
     };
   });
 });
@@ -215,17 +250,52 @@ else if (checkState == true){
     // If there were no errors and the response code was 200 (i.e. the request was successful)...
     if (!error && response.statusCode === 200) {
 
-        console.log('\n');
-        console.log("»»————-　★　————-««");
-        console.log("Title: ", jsonData.Title);
-        console.log("Year Released: " + jsonData.Year);
-        console.log("IMDB Rating: " + jsonData.imdbRating);
-        console.log("Rotten Tomatoes Rating: " + jsonData.Ratings[1].Value);
-        console.log("Country Made: " + jsonData.Country);
-        console.log("Language: " + jsonData.Language);
-        console.log("Plot: " + jsonData.Plot);
-        console.log("Actors: " + jsonData.Actors);
-        console.log("»»————-　★　————-««");
+        indent = ('\n');
+        console.log(indent);
+        writeData(indent +'\r\n');
+        
+        bar = ("»»————-　★　————-««");
+        console.log(bar);
+        writeData(bar +'\r\n');
+
+        time =(('Time logged: ') + (moment().format("MM-DD-YYYY hh:mma")));
+        console.log(time);
+        writeData(time +'\r\n');
+
+        title = ("Title: ", jsonData.Title);
+        console.log(title);
+        writeData(title +'\r\n');
+
+        yrReleased = ("Year Released: " + jsonData.Year);
+        console.log(yrReleased);
+        writeData(yrReleased +'\r\n');
+
+        IMDBRating = ("IMDB Rating: " + jsonData.imdbRating);
+        console.log(IMDBRating);
+        writeData(IMDBRating +'\r\n');
+
+        RT = ("Rotten Tomatoes Rating: " + jsonData.Ratings[1].Value);
+        console.log(RT);
+        writeData(RT +'\r\n');
+
+        country = ("Country Made: " + jsonData.Country);
+        console.log(country);
+        writeData(country +'\r\n');
+
+        lang = ("Language: " + jsonData.Language);
+        console.log(lang);
+        writeData(lang +'\r\n');
+
+        plot = ("Plot: " + jsonData.Plot);
+        console.log(plot);
+        writeData(plot +'\r\n');
+
+        actors = ("Actors: " + jsonData.Actors);
+        console.log(actors);
+        writeData(actors +'\r\n');
+
+        console.log(bar);
+        writeData(bar +'\r\n');
     };
 });
 
