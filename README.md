@@ -28,7 +28,7 @@ fs -- https://www.npmjs.com/package/fs
 ## Spotify-This
 The spotify-this command combined with a song track will query Spotify's API for all related songs up to 20 and return them for your viewing.
 
-Default (run blank): The Sign 
+##### <i>Default (run blank): The Sign </i>
 
 [![Spotify This Video](http://img.youtube.com/vi/z4pn09KQCRI/0.jpg)](http://www.youtube.com/watch?v=z4pn09KQCRI)
 
@@ -38,7 +38,7 @@ Default (run blank): The Sign
 
 The movie-this command combined with a movie choice will spit back a lot of popular information relevant to your chosen movie.
 
-Default (run blank): Mr. Nobody
+##### <i>Default (run blank): Mr. Nobody</i>
 
 [![Movie This Video](http://img.youtube.com/vi/U8Zh1yWwQ70/0.jpg)](http://www.youtube.com/watch?v=U8Zh1yWwQ70)
 
@@ -48,7 +48,7 @@ Default (run blank): Mr. Nobody
 
 When running concert-this along with a band or performer of choice you will receive back all the results of their upcoming venues. The time is formatted using Moment.JS.
 
-Default (run blank): Shinedown
+##### <i>Default (run blank): Shinedown</i>
 
 [![Concert This Video](http://img.youtube.com/vi/bn7m2P4zm1o/0.jpg)](http://www.youtube.com/watch?v=bn7m2P4zm1o)
 
