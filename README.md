@@ -23,12 +23,16 @@ fs -- https://www.npmjs.com/package/fs
 
 [![Intro Video](http://img.youtube.com/vi/YgwV22wvXxY/0.jpg)](http://www.youtube.com/watch?v=YgwV22wvXxY)
 
+
+
 ## Spotify-This
 The spotify-this command combined with a song track will query Spotify's API for all related songs up to 20 and return them for your viewing.
 
 Default (run blank): The Sign 
 
 [![Spotify This Video](http://img.youtube.com/vi/z4pn09KQCRI/0.jpg)](http://www.youtube.com/watch?v=z4pn09KQCRI)
+
+
 
 ## Movie-This
 
@@ -38,6 +42,8 @@ Default (run blank): Mr. Nobody
 
 [![Movie This Video](http://img.youtube.com/vi/U8Zh1yWwQ70/0.jpg)](http://www.youtube.com/watch?v=U8Zh1yWwQ70)
 
+
+
 ## Concert-This
 
 When running concert-this along with a band or performer of choice you will receive back all the results of their upcoming venues. The time is formatted using Moment.JS.
@@ -45,6 +51,8 @@ When running concert-this along with a band or performer of choice you will rece
 Default (run blank): Shinedown
 
 [![Concert This Video](http://img.youtube.com/vi/bn7m2P4zm1o/0.jpg)](http://www.youtube.com/watch?v=bn7m2P4zm1o)
+
+
 
 ## Do-What-It-Says
 
