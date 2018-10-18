@@ -15,8 +15,26 @@ var checkState = false;
 var omdb = process.env.OMDB_API;
 
 
-//Functions
-//Spotify Artist Name Retrieval
+//------------------------------------Functions------------------------------------
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ File Write ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+function  writeData(data) {
+    fs.appendFile("log.txt", data, function(err) {
+
+        // If the code experiences any errors it will log the error to the console.
+        if (err) {
+          return console.log(err);
+        }
+      
+        // Otherwise, it will print: "movies.txt was updated!"
+        console.log("log.txt was updated!");
+      
+      });
+
+
+};
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~ SPOTIFY Artist Name Retrieval ~~~~~~~~~~~~~~~~~~~~~~~~
 var getArtistNames = function(artist) {
     return JSON.stringify(artist.name);
 }
@@ -37,6 +55,11 @@ function SpotifyAPICall(checkState) {
     .then(function(inquirerResponse){
     searchTerm = inquirerResponse.input;
     
+    //Default if blank is inputted
+    if (searchTerm == ""){
+        searchTerm = "The Sign";
+    };
+
     //spotify api call
     spotify
     .search({ type: 'track', query: searchTerm })
@@ -48,7 +71,11 @@ function SpotifyAPICall(checkState) {
         for (var i=0; i<songs.length; i++){
             
             console.log(i+1);
+            data = i+1;
+            writeData(data+'\r');
             console.log('Artist(s): ', songs[i].artists.map(getArtistNames).join(", "));
+            data = ('Artist(s): ', songs[i].artists.map(getArtistNames).join(", "));
+            writeData(data+'\r');
             console.log('Song name: ', songs[i].name);
             console.log('Preview song: ', songs[i].preview_url);
             console.log('Album: ', songs[i].album.name);
@@ -88,9 +115,9 @@ function SpotifyAPICall(checkState) {
 
     };
 };
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ SPOTIFY End ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-
-//OBMD Call
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ OBMD Call ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 function MovieThisAPICall(checkState) {
     console.log('checkstate in movie call api: ', checkState);
     
@@ -105,7 +132,11 @@ function MovieThisAPICall(checkState) {
     ])
     .then(function(inquirerResponse){
     searchTerm = inquirerResponse.input;
-
+    
+    //Default if blank is inputted
+    if (searchTerm == ""){
+        searchTerm = "Mr. Nobody";
+    };
 
     apikey = 'trilogy';
     
@@ -166,9 +197,9 @@ else if (checkState == true){
 
 };
 };
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ OBMD END ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-
-//BANDS-IN-TOWN call function
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ BANDS-IN-TOWN call function ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 function ConcertThisAPICall(checkState) {
     
     if (checkState == false) {
@@ -176,15 +207,20 @@ function ConcertThisAPICall(checkState) {
     inquirer.prompt([
         {
             type: "input",
-            message: "What audio track would you like to search for?",
+            message: "What concert artist would you like to search for?",
             name: "input"
         },
     ])
     .then(function(inquirerResponse){
     searchTerm = inquirerResponse.input;
     
+    //Default if blank is inputted
+    if (searchTerm == ""){
+        searchTerm = "Shinedown";
+    };
 
-    //OMDB API Call
+
+    //Bands-In-Town API Call
     apikey = '9d6aabfeb9d1cdc49934d129dae9bfef';
     
     // API URL request call for OMDB
@@ -250,12 +286,12 @@ function ConcertThisAPICall(checkState) {
 });
 };
 };
-
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ BANDS-IN-TOWN END ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  
 
 
 
-//DO-WHAT-IT-SAYS
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ DO-WHAT-IT-SAYS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 function RandomRead() {
     fs.readFile("random.txt", "utf8", function(error, data) {
 
@@ -278,8 +314,10 @@ function RandomRead() {
         
       });
 };
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ DO-WHAT-IT-SAYS end ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Decide Function (logic flow) ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //Function to help decide what to do with the operator input
 function decideFunc(operator) {
     switch(operator) {
@@ -307,6 +345,7 @@ function decideFunc(operator) {
             break;
     };      
 };
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Decide Function End ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
 //Function to kick off the questions ater initial greeting
@@ -334,7 +373,7 @@ inquirer.prompt([
 });
 };
 
-//Intro console Logs--------------------------------
+//--------------------------------------Intro console Logs--------------------------------
 console.log('                             Welcome to Liri!\n');
 console.log("");
 console.log("                                  _____");
@@ -349,9 +388,10 @@ console.log("Plus the term you'd like to search!")
 console.log('');
 console.log("spotify-this-song || movie-this || concert-this || do-what-it-says");
 console.log(""); 
-//--------------------------------------------
+//-------------------------------------------- Intro End ---------------------------------
 
-//Program Start
+//------------------------------------------- Program Start ------------------------------
+
 initialQ();
 
 
