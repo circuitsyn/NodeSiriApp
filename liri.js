@@ -347,10 +347,17 @@ function ConcertThisAPICall(checkState) {
     // If there were no errors and the response code was 200 (i.e. the request was successful)...
     if (!error && response.statusCode === 200) {
 
-        console.log('\n');
-        console.log('Events for: ', searchTerm);
-        console.log("⊱ ────── {⋅. ♪ .⋅} ────── ⊰");
-        // console.log("Bands in town data: ", events);
+        indent = ('\n');
+        console.log(indent);
+        writeData(indent + '\r\n');
+
+        performer = ('Events for: ', searchTerm);
+        console.log(performer);
+        writeData(performer + '\r\n');
+
+        bar = ("⊱ ────── {⋅. ♪ .⋅} ────── ⊰");
+        console.log(bar);
+        writeData(bar + '\r\n');
         
         for (var i=0; i< events.length; i++){
             
@@ -495,7 +502,7 @@ console.log("                                 |_____|");
 console.log("                           ____ ___|_|___ ____");
 console.log("                          ()___)         ()___)");
 console.log('\n');
-console.log("In order to get started please give me one of three commands.");
+console.log("In order to get started please give me one of four commands.");
 console.log("Plus the term you'd like to search!")
 console.log('');
 console.log("spotify-this-song || movie-this || concert-this || do-what-it-says");
