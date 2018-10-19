@@ -22,7 +22,7 @@ fs -- https://www.npmjs.com/package/fs
 ## Intro 
 
 [![Intro Video](http://img.youtube.com/vi/YgwV22wvXxY/0.jpg)](http://www.youtube.com/watch?v=YgwV22wvXxY)
-
+###### click image for video
 
 
 ## Spotify-This
@@ -31,7 +31,7 @@ The spotify-this command combined with a song track will query Spotify's API for
 ##### <i>Default (run blank): The Sign </i>
 
 [![Spotify This Video](http://img.youtube.com/vi/z4pn09KQCRI/0.jpg)](http://www.youtube.com/watch?v=z4pn09KQCRI)
-
+###### click image for video
 
 
 ## Movie-This
@@ -41,7 +41,7 @@ The movie-this command combined with a movie choice will spit back a lot of popu
 ##### <i>Default (run blank): Mr. Nobody</i>
 
 [![Movie This Video](http://img.youtube.com/vi/U8Zh1yWwQ70/0.jpg)](http://www.youtube.com/watch?v=U8Zh1yWwQ70)
-
+###### click image for video
 
 
 ## Concert-This
@@ -51,7 +51,7 @@ When running concert-this along with a band or performer of choice you will rece
 ##### <i>Default (run blank): Shinedown</i>
 
 [![Concert This Video](http://img.youtube.com/vi/bn7m2P4zm1o/0.jpg)](http://www.youtube.com/watch?v=bn7m2P4zm1o)
-
+###### click image for video
 
 
 ## Do-What-It-Says
@@ -59,11 +59,12 @@ When running concert-this along with a band or performer of choice you will rece
 Running do-what-it-says will take in a file names random.txt and runn the command kept inside. for this demo the contents of the random.txt file are: spotify-this-song,"I Want it That Way"
 
 [![Do What It Says Video](http://img.youtube.com/vi/pSDE4_URXXs/0.jpg)](http://www.youtube.com/watch?v=pSDE4_URXXs)
+###### click image for video
 
 
-
-## File Write to create a log file
+## File Write to Create a Log File
 
 In order to create a log file we are using the fs npm package to writeData(); to a text file called log.txt. All data that is run and displayed in the terminal is also reflected in the file. It also does this without overwriting the file. As you can see in the uploaded log file it took some formatting attempts to get the data to read properly.
 
-[![Do What It Says Video](http://img.youtube.com/vi/4NqoqDAivEo/0.jpg)](http://www.youtube.com/watch?v=4NqoqDAivEo)
+[![File Write Video](http://img.youtube.com/vi/4NqoqDAivEo/0.jpg)](http://www.youtube.com/watch?v=4NqoqDAivEo)
+###### click image for video
