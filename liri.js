@@ -3,12 +3,12 @@ var fs = require('fs');
 require("dotenv").config();
 var inquirer = require("inquirer");
 var moment = require("moment");
-// var bandsintown = require('bandsintown')('9d6aabfeb9d1cdc49934d129dae9bfef');
-var Movie = require('omdb');
+// var Movie = require('omdb');
 var request = require('request');
 var Spotify = require('node-spotify-api');
 var keys = require('./keys.js');
 var spotify = new Spotify(keys.spotify);
+
 var checkState = false;
 
 // var omdb = new Movie(keys.omdb);
@@ -182,11 +182,13 @@ function MovieThisAPICall(checkState) {
         searchTerm = "Mr. Nobody";
     };
 
-    apikey = 'trilogy';
+    apikey = keys.omdb.api;
     
     // API URL request call for OMDB
     request("http://www.omdbapi.com/?t=" + searchTerm +"&y=&plot=short&r=json" + "&apikey="+ apikey, function(error, response, body) {
-
+        // console.log(response);
+        // console.log(apikey);
+        // console.log(process.env.OMDB_API);
     var jsonData = JSON.parse(body);
 
     
@@ -248,7 +250,7 @@ function MovieThisAPICall(checkState) {
 
 else if (checkState == true){
 
-    apikey = 'trilogy';
+    apikey = keys.omdb.api;
     checkState = false;
     // API URL request call for OMDB
     request("http://www.omdbapi.com/?t=" + searchTerm +"&y=&plot=short&r=json" + "&apikey="+ apikey, function(error, response, body) {
@@ -335,8 +337,8 @@ function ConcertThisAPICall(checkState) {
 
 
     //Bands-In-Town API Call
-    apikey = '9d6aabfeb9d1cdc49934d129dae9bfef';
     
+    apikey = keys.bands.api;
     // API URL request call for OMDB
     request("https://rest.bandsintown.com/artists/" + searchTerm + "/events?app_id=" + apikey + "&date=upcoming", function(error, response, body) {
 
@@ -376,7 +378,7 @@ function ConcertThisAPICall(checkState) {
     else if (checkState = true) {
 
         //OMDB API Call
-        apikey = '9d6aabfeb9d1cdc49934d129dae9bfef';
+        apikey = keys.bands.api;
         checkState = false;
         // API URL request call for OMDB
         request("https://rest.bandsintown.com/artists/" + searchTerm + "/events?app_id=" + apikey + "&date=upcoming", function(error, response, body) {
