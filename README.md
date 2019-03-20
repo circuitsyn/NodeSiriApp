@@ -1,4 +1,4 @@
-# LIRI Bot :computer::microphone::headphones::clapper::floppy_disk:
+# !SIRI Bot :computer::microphone::headphones::clapper::floppy_disk:
 ![LIRI_Bot Pic](liribot.PNG)
 
 LIRI Bot is a Node.JS Language Input Robot Interface that takes language commands ads runs a function. This current robot can do a myriad of things and had four commands to start: spotify-this, movie-this, concert-this, and do-what-it-says. You will find demo videos below breaking down the details of what they do. Please feel free to give it a try!
